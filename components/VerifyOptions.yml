@@ -17,6 +17,9 @@ components:
       additionalProperties: false
       description: Options for specifying how the LinkedDataProof is verified.
       properties:
+        consented:
+          type: string
+          description: The date and time of the consent given. Default current system time.
         challenge:
           type: string
           description: A challenge provided by the requesting party of the proof. For example 6e62f66e-67de-11eb-b490-ef3eeefa55f2

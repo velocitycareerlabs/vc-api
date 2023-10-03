@@ -1,88 +1,119 @@
 openapi: 3.0.0
 servers:
-  - url: https://issuer.qa.veres.app/issuers/z19mTE4x8KHRaQLgdoYwsfPnU
+  - url: 'https://issuer.qa.veres.app/issuers/z19mTE4x8KHRaQLgdoYwsfPnU'
     description: Veres Issuer (Quality Assurance)
 info:
-  version: "0.0.3-unstable"
+  version: 0.0.3-unstable
   title: VC Issuer API
-  description: This is an Experimental Open API Specification for the [VC Data Model](https://www.w3.org/TR/vc-data-model/).
+  description: 'This is an Experimental Open API Specification for the [VC Data Model](https://www.w3.org/TR/vc-data-model/).'
   license:
     name: W3C Software and Document License
-    url: http://www.w3.org/Consortium/Legal/copyright-software.
+    url: 'http://www.w3.org/Consortium/Legal/copyright-software.'
   contact:
     name: GitHub Source Code
-    url: https://github.com/w3c-ccg/vc-api
+    url: 'https://github.com/w3c-ccg/vc-api'
 paths:
   /credentials/issue:
     post:
       summary: Issues a credential and returns it in the response body.
       tags:
-       - Credentials
+        - Credentials
       security:
-       - networkAuth: []
-       - oAuth2: []
-       - zCap: []
+        - networkAuth: []
+        - oAuth2: []
+        - zCap: []
       operationId: issueCredential
       description: Issues a credential and returns it in the response body.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/IssueCredentialRequest"
+              $ref: '#/components/schemas/IssueCredentialRequest'
         description: Parameters for issuing the credential.
       responses:
-        "201":
+        '201':
           description: Credential successfully issued!
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/IssueCredentialResponse"
-        "400":
+                $ref: '#/components/schemas/IssueCredentialResponse'
+              examples:
+                JSON-LD Example:
+                  value:
+                    verifiableCredential:
+                      '@context':
+                        - 'https://www.w3.org/2018/credentials/v1'
+                        - 'https://www.w3.org/2018/credentials/examples/v1'
+                      id: 'http://example.gov/credentials/3732'
+                      type:
+                        - VerifiableCredential
+                        - UniversityDegreeCredential
+                      issuer: 'did:example:123'
+                      issuanceDate: '2020-03-16T22:37:26.544Z'
+                      credentialSubject:
+                        id: 'did:example:123'
+                        degree:
+                          type: BachelorDegree
+                          name: Bachelor of Science and Arts
+                      proof:
+                        type: Ed25519Signature2018
+                        created: '2020-04-02T18:28:08Z'
+                        verificationMethod: 'did:example:123#z6MksHh7qHWvybLg5QTPPdG2DgEjjduBDArV9EF9mRiRzMBN'
+                        proofPurpose: assertionMethod
+                        jws: eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..YtqjEYnFENT7fNW-COD0HAACxeuQxPKAmp4nIl8jYAu__6IH2FpSxv81w-l5PvE1og50tS9tH8WyXMlXyo45CA
+                JWT-VC:
+                  value:
+                    verifiableCredential: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NksiLCJraWQiOiJkaWQ6dmVsb2NpdHk6djI6MHgyMzVmMjQwMDViNTUzZTUwYzg3M2VmODQ3Y2Y1MWEyOThlNWQyM2ZmOjM6NTQzMiNrZXktMSJ9.eyJ2YyI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvMjAxOC9jcmVkZW50aWFscy92MSJdLCJ0eXBlIjpbIlBhc3RFbXBsb3ltZW50UG9zaXRpb24iLCJWZXJpZmlhYmxlQ3JlZGVudGlhbCJdLCJpZCI6ImRpZDp2ZWxvY2l0eTp2MjoweDIzNWYyNDAwNWI1NTNlNTBjODczZWY4NDdjZjUxYTI5OGU1ZDIzZmY6Mzo1NDMyIiwiY3JlZGVudGlhbFN0YXR1cyI6eyJ0eXBlIjoiVmVsb2NpdHlSZXZvY2F0aW9uTGlzdEphbjIwMjEiLCJpZCI6ImV0aGVyZXVtOi8vMHgxMjM0L2dldFJldm9rZVN0YXR1cz9hZGRyZXNzPTB4NDEyJmxpc3RJZD0yJmluZGV4PTEiLCJzdGF0dXNMaXN0SW5kZXgiOjEsInN0YXR1c0xpc3RDcmVkZW50aWFsIjoiZXRoZXJldW06Ly8weDEyMzQvZ2V0UmV2b2tlU3RhdHVzP2FkZHJlc3M9MHg0MTImbGlzdElkPTIiLCJsaW5rQ29kZUNvbW1pdCI6IkVpQUpjck1uQjdZRy9VQUhSY3U1ZU9qRXgyZWJiWml3Ym11WExXZU8zVEdzd3c9PSJ9LCJsaW5rQ29kZUNvbW1pdG1lbnQiOnsidHlwZSI6IlZlbG9jaXR5Q3JlZGVudGlhbExpbmtDb2RlQ29tbWl0bWVudDIwMjIiLCJ2YWx1ZSI6IkVpQUpjck1uQjdZRy9VQUhSY3U1ZU9qRXgyZWJiWml3Ym11WExXZU8zVEdzd3c9PSJ9LCJpc3N1ZXIiOnsiaWQiOiJkaWQ6dmVsb2NpdHk6a3JveTl1aTRwcW9rNDY1OGF0eXc0cW52cXQ0a2t1MW1jMmVveTdvbyJ9LCJjcmVkZW50aWFsU2NoZW1hIjp7InR5cGUiOiJKc29uU2NoZW1hVmFsaWRhdG9yMjAxOCIsImlkIjoiaHR0cDovL29yYWNsZS5sb2NhbGhvc3QudGVzdC9zY2hlbWFzL1Bhc3RFbXBsb3ltZW50UG9zaXRpb24ifSwiY29udGVudEhhc2giOnsidHlwZSI6IlZlbG9jaXR5Q29udGVudEhhc2gyMDIwIiwidmFsdWUiOiI4ZDdjMTcwMzFjZjA3ODgwYTExZTY4NzcxZjBmODQyYzVhY2U3N2RlYWM2ZTRjNjk2ZTYyMzJmMDAyOTZiN2ZkIn0sImNyZWRlbnRpYWxTdWJqZWN0Ijp7ImNvbXBhbnkiOiJkaWQ6dmVsb2NpdHk6a3JveTl1aTRwcW9rNDY1OGF0eXc0cW52cXQ0a2t1MW1jMmVveTdvbyIsImNvbXBhbnlOYW1lIjp7ImxvY2FsaXplZCI6eyJlbiI6Ik1pY3Jvc29mdCBDb3Jwb3JhdGlvbiJ9fSwidGl0bGUiOnsibG9jYWxpemVkIjp7ImVuIjoiRGlyZWN0b3IsIENvbW11bmljYXRpb25zIChIb2xvTGVucyAmIE1peGVkIFJlYWxpdHkgRXhwZXJpZW5jZXMpIn19LCJzdGFydE1vbnRoWWVhciI6eyJtb250aCI6MTAsInllYXIiOjIwMTB9LCJlbmRNb250aFllYXIiOnsibW9udGgiOjYsInllYXIiOjIwMTl9LCJsb2NhdGlvbiI6eyJjb3VudHJ5Q29kZSI6IlVTIiwicmVnaW9uQ29kZSI6Ik1BIn0sImRlc2NyaXB0aW9uIjp7ImxvY2FsaXplZCI6eyJlbiI6ImwgRGF0YSwgQUksIEh5YnJpZCwgSW9ULCBEYXRhY2VudGVyLCBNaXhlZCBSZWFsaXR5L0hvbG9MZW5zLCBEMzY1LCBQb3dlciBQbGF0Zm9ybSAtIGFsbCBraW5kcyBvZiBmdW4gc3R1ZmYhIn19fX0sIm5iZiI6MTY4MDU4NDQ1NywianRpIjoiZGlkOnZlbG9jaXR5OnYyOjB4MjM1ZjI0MDA1YjU1M2U1MGM4NzNlZjg0N2NmNTFhMjk4ZTVkMjNmZjozOjU0MzIiLCJpc3MiOiJkaWQ6dmVsb2NpdHk6a3JveTl1aTRwcW9rNDY1OGF0eXc0cW52cXQ0a2t1MW1jMmVveTdvbyIsImlhdCI6MTY4MDU4NDQ1N30.7gkRYrXmIqwagOT9pd-37Nw2kCfHZwHZbYADHJsX1KSheRH8Eukg3DeaNg3dZLlEHpLVTipGKsLEPMVUFnF8Eg
+        '400':
           description: invalid input!
-        "500":
+        '500':
           description: error!
   /credentials/status:
     post:
       summary: Updates the status of an issued credential
       tags:
-       - Credentials
+        - Credentials
       security:
-       - networkAuth: []
-       - oAuth2: []
-       - zCap: []
+        - networkAuth: []
+        - oAuth2: []
+        - zCap: []
       operationId: updateCredentialStatus
       description: Updates the status of an issued credential.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateCredentialStatus"
+              $ref: '#/components/schemas/UpdateCredentialStatus'
         description: Parameters for updating the status of the issued credential.
       responses:
-        "200":
+        '200':
           description: Credential status successfully updated
-        "400":
+        '400':
           description: Bad Request
-        "404":
+        '404':
           description: Credential not found
-        "500":
+        '500':
           description: Internal Server Error
 components:
   securitySchemes:
-    $ref: "./components/SecuritySchemes.yml#/components/securitySchemes"
+    $ref: ./components/SecuritySchemes.yml#/components/securitySchemes
   schemas:
     IssueCredentialRequest:
       type: object
       properties:
         credential:
-          $ref: "./components/Credential.yml#/components/schemas/Credential"
+          $ref: ./components/Credential.yml#/components/schemas/Credential
         options:
-          $ref: "./components/IssueCredentialOptions.yml#/components/schemas/IssueCredentialOptions"
+          $ref: ./components/IssueCredentialOptions.yml#/components/schemas/IssueCredentialOptions
     IssueCredentialResponse:
       type: object
       properties:
         verifiableCredential:
-          $ref: "./components/VerifiableCredential.yml#/components/schemas/VerifiableCredential"
+          oneOf:
+            - $ref: ./components/VerifiableCredential.yml#/components/schemas/VerifiableCredential
+            - type: string
+              description: string containing a jwt-vc encoded VerifiableCredential
+          description: either a JWT-VC as a string or a JSON-LD encoded VerifiableCredential
     UpdateCredentialStatus:
       type: object
       description: Request for updating the status of an issued credential.
@@ -99,8 +130,7 @@ components:
               status:
                 type: string
       example:
-        {
-          "credentialId": "urn:uuid:45a44711-e457-4fa8-9b89-69fe0287c86a",
-          "credentialStatus":
-            [{ "type": "RevocationList2020Status", "status": "0" }],
-        }
+        credentialId: 'urn:uuid:45a44711-e457-4fa8-9b89-69fe0287c86a'
+        credentialStatus:
+          - type: RevocationList2020Status
+            status: '0'
